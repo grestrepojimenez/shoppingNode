@@ -21,9 +21,24 @@ function create(req, res) {
     .catch(handleError(res))
 }
 
+//Update product
+function update(req, res) {
+  return Product.findOneAndUpdate(req.params.id, req.body, { new: true })
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res))
+}
+
 // Get a single product from DB
 function show(req, res) {
   return Product.findById(req.params.id).exec()
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res))
+}
+
+// Delete single product from DB
+function deleteProduct(req, res) {
+  return Product.findOneAndRemove(req.params.id)
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res))
@@ -55,6 +70,8 @@ function handleError(res, code) {
 
 module.exports = {
   create,
+  update,
   show,
-  index
+  index,
+  deleteProduct
 }

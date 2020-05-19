@@ -10,7 +10,8 @@ const routeConfig = require('./routes')
 const config = require('./config/environment')
 
 // Connect to MongoDB
-mongoose.connect(config.mongo.uri, { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(config.mongo.uri,
+  { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false },)
 mongoose.connection.on('error', (err) => {
   console.error('Error', 'MongoDB connection error', {
     data: err,
