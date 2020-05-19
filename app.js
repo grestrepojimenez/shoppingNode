@@ -5,6 +5,8 @@ const http = require('http')
 
 // Express Config  --new line
 const expressConfig = require('./config/express')
+// Routes Config --new line
+const routeConfig = require('./routes')
 
 // Setup Server
 const app = express()
@@ -12,6 +14,8 @@ const server = http.createServer(app)
 
 // Express Config  --new line
 expressConfig(app)
+// Routes Config --new line
+routeConfig(app)
 
 const config = {
   port: 8080,
