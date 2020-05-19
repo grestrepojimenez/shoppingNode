@@ -10,7 +10,7 @@ const routeConfig = require('./routes')
 const config = require('./config/environment')
 
 // Connect to MongoDB
-mongoose.connect(config.mongo.uri, { useNewUrlParser: true })
+mongoose.connect(config.mongo.uri, { useUnifiedTopology: true, useNewUrlParser: true })
 mongoose.connection.on('error', (err) => {
   console.error('Error', 'MongoDB connection error', {
     data: err,
@@ -19,27 +19,27 @@ mongoose.connection.on('error', (err) => {
   process.exit(-1)
 })
 
-  // Setup Server
-  const app = express()
-  const server = http.createServer(app)
+// Setup Server
+const app = express()
+const server = http.createServer(app)
 
-  expressConfig(app)
-  routeConfig(app)
+expressConfig(app)
+routeConfig(app)
 
-  const config = {
-    port: 8080,
-    ip: '127.0.0.1'
-  }
+// const config = {
+//   port: 8080,
+//   ip: '127.0.0.1'
+// }
 
-  //Start Server
+//Start Server
 
-  function startServer() {
-    app.shoppingCarBk = server.listen(config.port, config.ip, () => {
-      console.log(`Express server listening on ${config.port}, in ${app.get('env')} mode`)
-    })
-  }
+function startServer() {
+  app.shoppingCarBk = server.listen(config.port, config.ip, () => {
+    console.log(`Express server listening on ${config.port}, in ${app.get('env')} mode`)
+  })
+}
 
-  setImmediate(startServer) // Inicializa la funcion startServer con prioridad
-  // startServer()
+setImmediate(startServer) // Inicializa la funcion startServer con prioridad
+// startServer()
 
-  module.exports = app
+module.exports = app
